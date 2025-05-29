@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Lost & Found App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ url_for('dashboard') }}" class="navbar-brand">Lost & Found</a>
+            <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item"><a href="{{ url_for('items_found_list') }}" class="nav-link">Знайдені предмети</a></li>
+                    <li class="nav-item"><a href="{{ url_for('items_lost_list') }}" class="nav-link">Загублені предмети</a></li>
+                    {% if current_user.role.name == 'Admin' %}
+                        <li class="nav-item"><a href="{{ url_for('users_list') }}" class="nav-link">Користувачі</a></li>
+                        <li class="nav-item"><a href="{{ url_for('roles_list') }}" class="nav-link">Ролі</a></li>
+                    {% endif %}
+                    <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link">Вийти ({{ current_user.username }})</a></li>
+                {% else %}
+                    <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link">Увійти</a></li>
+                    <li class="nav-item"><a href="{{ url_for('register') }}" class="nav-link">Зареєструватися</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="flash-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Lost & Found App. All rights reserved.</p>
+    </footer>
+</body>
+</html>

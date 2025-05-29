@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Редагувати користувача{% endblock %}
+
+{% block content %}
+    <h1>Редагувати користувача (ID: {{ user_id }})</h1>
+
+    <form method="POST" action="{{ url_for('update_user', user_id=user_id) }}">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.username.label }}
+            {{ form.username(class="form-control") }}
+            {% if form.username.errors %}
+                <ul class="form-errors">
+                    {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email(class="form-control") }}
+            {% if form.email.errors %}
+                <ul class="form-errors">
+                    {% for error in form.email.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.role_id.label }}
+            {{ form.role_id(class="form-control") }}
+            {% if form.role_id.errors %}
+                <ul class="form-errors">
+                    {% for error in form.role_id.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Оновити користувача</button>
+    </form>
+
+    <p><a href="{{ url_for('users_list') }}" class="btn btn-secondary">Повернутись до списку користувачів</a></p>
+{% endblock %}

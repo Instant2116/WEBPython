@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Role: {{ role.name }}</title>
+</head>
+<body>
+    <h1>Edit Role: {{ role.name }}</h1>
+
+    <form method="post">
+        {% csrf_token %} {# IMPORTANT: This protects against CSRF attacks #}
+
+        {# Renders all form fields as paragraphs. Adjust for custom layout if needed. #}
+        {{ form.as_p }}
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <br>
+    <a href="{% url 'roles_list' %}">Back to Roles List</a>
+</body>
+</html>

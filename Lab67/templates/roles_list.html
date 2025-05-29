@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Список ролей{% endblock %}
+
+{% block content %}
+    <h1>Список ролей</h1>
+
+    {# Закоментовано, оскільки функціонал створення/редагування ролей зазвичай не потрібен, якщо ролі статичні #}
+    {# <p><a href="{{ url_for('create_role') }}" class="btn btn-primary">Додати нову роль</a></p> #}
+
+    {% if roles %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Назва</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for role in roles %}
+                <tr>
+                    <td>{{ role.id }}</td>
+                    <td>{{ role.name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Ролей поки що немає.</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Повернутись до панелі керування</a></p>
+{% endblock %}

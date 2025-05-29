@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Список користувачів{% endblock %}
+
+{% block content %}
+    <h1>Список користувачів</h1>
+    <p><a href="{{ url_for('register') }}" class="btn btn-primary">Створити нового користувача</a></p>
+
+    {% if users %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ім'я користувача</th>
+                    <th>Email</th>
+                    <th>Роль</th>
+                    <th>Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role.name }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('update_user', user_id=user.id) }}" class="btn btn-secondary">Редагувати</a>
+                        <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post" style="display:inline;">
+                            {{ form.csrf_token }}
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Ви впевнені, що хочете видалити цього користувача?');">Видалити</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Користувачів не знайдено.</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Повернутись до панелі керування</a></p>
+{% endblock %}

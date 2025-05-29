@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Вітаємо, {{ user_obj.username }}!</h1>
+    <p>Ваша роль: **{{ user_obj.role.name }}**</p>
+
+    <h2>Навігація</h2>
+    <p>
+        <a href="{{ url_for('items_found_list') }}" class="btn btn-primary">Знайдені предмети</a>
+        <a href="{{ url_for('items_lost_list') }}" class="btn btn-primary">Загублені предмети</a>
+    </p>
+
+    {% if user_obj.role.name == 'Admin' %}
+        <h2>Панель адміністратора</h2>
+        <p>
+            <a href="{{ url_for('users_list') }}" class="btn btn-primary">Керувати користувачами</a>
+            <a href="{{ url_for('roles_list') }}" class="btn btn-primary">Керувати ролями</a>
+        </p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ user_obj.username }}!</h1>
+    <p>Your role: **{{ user_obj.role.name }}**</p>
+
+    <h2>Navigation</h2>
+    <ul>
+        <li><a href="{% url 'items_found_list' %}">Found Items</a></li>
+        <li><a href="{% url 'items_lost_list' %}">Lost Items</a></li>
+        <li><a href="{% url 'login' %}">Logout (Go back to Login)</a></li>
+    </ul>
+
+    {% if user_obj.role.name == 'Admin' %}
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="{% url 'users_list' %}">Manage Users</a></li>
+            <li><a href="{% url 'roles_list' %}">Manage Roles</a></li>
+            </ul>
+    {% endif %}
+
+    </body>
+</html>

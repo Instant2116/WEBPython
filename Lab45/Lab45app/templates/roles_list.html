@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roles List</title>
+</head>
+<body>
+    <h1>List of Roles</h1>
+
+    {# Link to create a new role #}
+    <a href="{% url 'role_create' %}">Add New Role</a>
+    <br><br>
+
+    {% if roles %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {# Loop through each role in the 'roles' list passed from the view #}
+                {% for role in roles %}
+                <tr>
+                    <td>{{ role.id }}</td>
+                    <td>{{ role.name }}</td>
+                    <td>
+                        {# Link to edit this specific role #}
+                        <a href="{% url 'role_edit' role.id %}">Edit</a> |
+
+                        {# Form to delete this specific role #}
+                        <form method="post" action="{% url 'role_delete' role.id %}" style="display:inline;">
+                            {% csrf_token %} {# IMPORTANT: CSRF token for POST forms #}
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete the role \'{{ role.name }}\'?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No roles to display yet.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</body>
+</html>
