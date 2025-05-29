@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Lost Item</title>
+</head>
+<body>
+    <h1>Create New Lost Item</h1>
+    <form method="post">
+        {% csrf_token %} {# <-- ADD THIS LINE! #}
+        {{ form.as_p }} {# Renders form fields as paragraphs #}
+        <button type="submit">Create Item</button>
+    </form>
+    <br>
+    <a href="{% url 'items_found_list' %}">Back to Found Items List</a>
+</body>
+</html>
