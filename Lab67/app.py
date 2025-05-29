@@ -85,7 +85,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = crud.get_user_by_username(g.db, form.username.data)
-        if user and user.check_password(form.password.data):
+        if user and crud.verify_password(form.password.data, user.hashed_password):
             login_user(user)
             flash('Logged in successfully!', 'success')
             return redirect(url_for('dashboard'))
